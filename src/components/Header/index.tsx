@@ -1,0 +1,385 @@
+import React, { useState } from 'react'
+import useScrollPosition from '@react-hook/window-scroll'
+import { NavLink } from 'react-router-dom'
+import styled, { css } from 'styled-components/macro'
+import useTheme from 'hooks/useTheme'
+import { Menu as SideBarMenu, X } from 'react-feather'
+import { useTranslation } from 'contexts/Localization'
+import Row from '../Row'
+import Logo from '../../assets/svg/logo.svg'
+import LogoDark from '../../assets/svg/logo_white.svg'
+
+const HeaderFrame = styled.div<{ showBackground: boolean }>`
+  display: grid;
+  grid-template-columns: 120px 1fr 120px;
+  align-items: center;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  top: 0;
+  position: relative;
+  padding: 1rem;
+  z-index: 21;
+  position: relative;
+  /* Background slide effect on scroll. */
+  background-image: ${({ theme }) => `linear-gradient(to bottom, transparent 50%, ${theme.colors.bg0} 50% )}}`};
+  background-position: ${({ showBackground }) => (showBackground ? '0 -100%' : '0 0')};
+  background-size: 100% 200%;
+  box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.colors.bg2 : 'transparent;')};
+  transition: background-position 0.1s, box-shadow 0.1s;
+  background-blend-mode: hard-light;
+	${({ theme }) => theme.mediaQueries.sm} {
+    padding:  1rem;
+    grid-template-columns: 36px 1fr;
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding:  1rem;
+    grid-template-columns: 1fr 1fr;
+  }
+  ${({ theme }) => theme.mediaQueries.lg} {
+    grid-template-columns: 48px 10fr 1fr;
+  }
+  ${({ theme }) => theme.mediaQueries.xl} {
+    grid-template-columns: 48px 10fr 1fr;
+  }
+`
+const Title = styled.a`
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+  justify-self: flex-start;
+  margin-right: 12px;
+	${({ theme }) => theme.mediaQueries.sm} {
+    justify-self: center;
+  }
+  :hover {
+    cursor: pointer;
+  }
+`
+const UniIcon = styled.div`
+  transition: transform 0.3s ease;
+  :hover {
+    transform: rotate(-5deg);
+  }
+`
+const HeaderLinks = styled(Row)<{ isShown: boolean }>`
+  justify-self: flex-end;
+  background-color: ${({ theme }) => theme.colors.bg0};
+  width: fit-content;
+  padding: 4px;
+  border-radius: 0px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 10px;
+  overflow: auto;
+  align-items: center;
+	${({ theme }) => theme.mediaQueries.sm} {
+    padding:  1rem;
+    grid-template-columns: 36px 1fr;
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    justify-self: flex-end;
+		flex-direction: row;
+    justify-self: flex-end;
+    z-index: 99;
+    position: fixed;
+    right: 0;
+    transform: translate(50%,-50%);
+    margin: 0 auto;
+    background-color: ${({ theme }) => theme.colors.bg0};
+    border: 1px solid ${({ theme }) => theme.colors.bg2};
+    box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
+    display: flex;
+    position: fixed;
+    top: 0;    
+    width: 276px;
+    height: 100%;
+    flex-direction: column;
+    padding: 66px 20px;
+    transition: transform .25s ease;
+    will-change: transform;
+    transform: translateX(1000%);
+    overflow-y: scroll;
+    z-index: 6;
+  }
+  ${({ theme }) => theme.mediaQueries.lg} {
+    justify-self: center;
+  }
+  ${({ theme }) => theme.mediaQueries.xl} {
+    justify-self: center;
+  }
+  ${(props) =>
+    props.isShown
+      ? css`					
+					${({ theme }) => theme.mediaQueries.sm} {
+						flex-direction: row;
+            justify-self: flex-end;
+            z-index: 99;
+            position: fixed;
+            right: 0;
+            transform: translate(50%, -50%);
+            margin: 0 auto;
+            background-color: ${({ theme }) => theme.colors.bg0};
+            border: 1px solid ${({ theme }) => theme.colors.bg2};
+            box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
+            display: flex;
+            position: fixed;
+            top: 0;
+            width: 276px;
+            height: 100%;
+            flex-direction: column;
+            padding: 66px 20px;
+            transition: transform 0.25s ease;
+            will-change: transform;
+            transform: translateX(1000%);
+            overflow-y: scroll;
+            z-index: 6;
+            transform: translateX(0);
+            box-shadow: -0.125rem 0 1.25rem 0 #343851;
+					}
+          ${({ theme }) => theme.mediaQueries.md} {
+						flex-direction: row;
+            justify-self: flex-end;
+            z-index: 99;
+            position: fixed;
+            right: 0;
+            transform: translate(50%, -50%);
+            margin: 0 auto;
+            background-color: ${({ theme }) => theme.colors.bg0};
+            border: 1px solid ${({ theme }) => theme.colors.bg2};
+            box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
+            display: flex;
+            position: fixed;
+            top: 0;
+            width: 276px;
+            height: 100%;
+            flex-direction: column;
+            padding: 66px 20px;
+            transition: transform 0.25s ease;
+            will-change: transform;
+            transform: translateX(1000%);
+            overflow-y: scroll;
+            z-index: 6;
+            transform: translateX(0);
+            box-shadow: -0.125rem 0 1.25rem 0 #343851;
+					}
+        `
+      : css``};
+`
+const HeaderLinksw3 = styled.div<{ isShown: boolean }>`
+  justify-self: center;
+  background-color: ${({ theme }) => theme.colors.bg0};
+  width: fit-content;
+  padding: 4px;
+  border-radius: 0px;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 10px;
+  overflow: auto;
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  padding: 0px;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  margin: 0px;
+  min-width: 0px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding:  1rem;
+    grid-template-columns: 36px 1fr;
+  }
+  ${({ theme }) => theme.mediaQueries.lg} {
+    justify-self: center;
+  }
+  ${({ theme }) => theme.mediaQueries.xl} {
+    justify-self: center;
+  }
+  ${(props) =>
+    props.isShown
+      ? css`					
+					${({ theme }) => theme.mediaQueries.xs} {
+						flex-direction: row;
+            justify-self: flex-end;
+            z-index: 99;
+            position: fixed;
+            right: 0;
+            transform: translate(50%, -50%);
+            margin: 0 auto;
+            background-color: ${({ theme }) => theme.colors.bg0};
+            border: 1px solid ${({ theme }) => theme.colors.bg2};
+            box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
+            display: flex;
+            position: fixed;
+            top: 0;
+            width: 276px;
+            height: 100%;
+            flex-direction: column;
+            padding: 66px 20px;
+            transition: transform 0.25s ease;
+            will-change: transform;
+            transform: translateX(1000%);
+            overflow-y: scroll;
+            z-index: 6;
+            transform: translateX(0);
+            box-shadow: -0.125rem 0 1.25rem 0 #343851;
+					}
+          ${({ theme }) => theme.mediaQueries.md} {
+						flex-direction: row;
+            justify-self: flex-end;
+            z-index: 99;
+            position: fixed;
+            right: 0;
+            transform: translate(50%, -50%);
+            margin: 0 auto;
+            background-color: ${({ theme }) => theme.colors.bg0};
+            border: 1px solid ${({ theme }) => theme.colors.bg2};
+            box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
+            display: flex;
+            position: fixed;
+            top: 0;
+            width: 276px;
+            height: 100%;
+            flex-direction: column;
+            padding: 66px 20px;
+            transition: transform 0.25s ease;
+            will-change: transform;
+            transform: translateX(1000%);
+            overflow-y: scroll;
+            z-index: 6;
+            transform: translateX(0);
+            box-shadow: -0.125rem 0 1.25rem 0 #343851;
+					}
+        `
+      : css``};
+`
+const SideBarWrapper = styled.div`
+  vertical-align: middle;
+  padding-top: 1rem;
+  display: block;
+  ${({ theme }) => theme.mediaQueries.xl} {
+    display: none;
+  }
+	${({ theme }) => theme.mediaQueries.lg} {
+    display: none;
+  }
+	${({ theme }) => theme.mediaQueries.md} {
+    display: none;
+  }
+`
+const NavToggle = styled.button`
+  display: block;
+	${({ theme }) => theme.mediaQueries.xl} {
+    display: none;
+  }
+  ${({ theme }) => theme.mediaQueries.lg} {
+    display: none;
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    display: none;
+  }
+	${({ theme }) => theme.mediaQueries.sm} {
+    justify-self: self-end;
+    padding-rigth: 1rem;
+    background: transparent;
+    border: 0;
+    border-radius: 3px;
+    outline: 0;
+    cursor: pointer;
+    display: block;
+  }
+  ${({ theme }) => theme.mediaQueries.xs} {
+    justify-self: self-end;
+    padding-rigth: 1rem;
+    background: transparent;
+    border: 0;
+    border-radius: 3px;
+    outline: 0;
+    cursor: pointer;
+    display: block;
+  }
+`
+const NavClose = styled(NavToggle)`
+  position: absolute;
+  top: 16px;
+  left: 16px;
+`
+const activeClassName = 'ACTIVE'
+
+const StyledNavLink = styled(NavLink).attrs({
+  activeClassName,
+})`
+	display: flex;
+	flex-flow: row nowrap;
+  align-items: left;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.text2};
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 8px 12px;
+  word-break: break-word;
+  overflow: hidden;
+  white-space: nowrap;
+  &.${activeClassName} {
+    font-weight: 600;
+    justify-content: center;
+    border-bottom: 0.25rem solid #000;
+    color: ${({ theme }) => theme.colors.text1};
+  }
+
+  :hover,
+  :focus {
+    color: ${({ theme }) => theme.colors.text1};
+  }
+`
+
+export default function Header() {
+	const { theme } = useTheme()
+  const { t } = useTranslation()
+	const scrollY = useScrollPosition()
+	const [isShown, setIsShown] = useState(false)
+  return (
+    <HeaderFrame showBackground={scrollY > 45}>
+			<Title href=".">
+        <UniIcon>
+          <img width="24px" src={theme.isDark ? LogoDark : Logo} alt="logo" />
+        </UniIcon>
+      </Title>
+			<HeaderLinksw3 isShown={isShown}>
+				<SideBarWrapper>
+          <NavClose onClick={() => setIsShown(!isShown)}>
+            <X strokeWidth="3" color="#000" />
+          </NavClose>
+        </SideBarWrapper>
+        <StyledNavLink id="swap-nav-link" to="/markets" onClick={() => setIsShown(!isShown)}>
+          {t('Markets')}
+        </StyledNavLink>
+        <StyledNavLink
+          id="pool-nav-link"
+          to="/test"
+          isActive={(match, { pathname }) =>
+            Boolean(match) ||
+            pathname.startsWith('/add') ||
+            pathname.startsWith('/remove') ||
+            pathname.startsWith('/increase') ||
+            pathname.startsWith('/find')
+          }
+          onClick={() => setIsShown(!isShown)}
+        >
+          {t('My Dashboard')}
+        </StyledNavLink>        
+          <StyledNavLink id="stake-nav-link" to="/vote" onClick={() => setIsShown(!isShown)}>
+            {t('Deposit')}
+          </StyledNavLink>
+			</HeaderLinksw3>
+      <NavToggle onClick={() => setIsShown(!isShown)}>
+        <SideBarMenu size="30" strokeWidth="3" />
+      </NavToggle>
+    </HeaderFrame>
+  )
+}

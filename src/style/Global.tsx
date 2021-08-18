@@ -12,12 +12,17 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Kanit', sans-serif;
   }
   body {
-    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text1};
+    background-color: ${({ theme }) => theme.colors.bg1};
 
     img {
       height: auto;
       max-width: 100%;
     }
+
+    a {
+      color: ${({ theme }) => theme.colors.blue1}; 
+     }
   }
 `
 
