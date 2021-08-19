@@ -5,13 +5,15 @@ import styled, { css } from 'styled-components/macro'
 import useTheme from 'hooks/useTheme'
 import { Menu as SideBarMenu, X } from 'react-feather'
 import { useTranslation } from 'contexts/Localization'
+import UserMenu from 'components/Menu/UserMenu'
 import Row from '../Row'
 import Logo from '../../assets/svg/logo.svg'
 import LogoDark from '../../assets/svg/logo_white.svg'
 
 const HeaderFrame = styled.div<{ showBackground: boolean }>`
   display: grid;
-  grid-template-columns: 120px 1fr 120px;
+  padding:  1rem;
+  grid-template-columns: 36px 1fr;
   align-items: center;
   justify-content: space-between;
   align-items: center;
@@ -29,10 +31,7 @@ const HeaderFrame = styled.div<{ showBackground: boolean }>`
   box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.colors.bg2 : 'transparent;')};
   transition: background-position 0.1s, box-shadow 0.1s;
   background-blend-mode: hard-light;
-	${({ theme }) => theme.mediaQueries.sm} {
-    padding:  1rem;
-    grid-template-columns: 36px 1fr;
-  }
+
   ${({ theme }) => theme.mediaQueries.md} {
     padding:  1rem;
     grid-template-columns: 1fr 1fr;
@@ -44,15 +43,18 @@ const HeaderFrame = styled.div<{ showBackground: boolean }>`
     grid-template-columns: 48px 10fr 1fr;
   }
 `
+const HeaderControls = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-self: flex-end;
+`
 const Title = styled.a`
   display: flex;
   align-items: center;
   pointer-events: auto;
   justify-self: flex-start;
   margin-right: 12px;
-	${({ theme }) => theme.mediaQueries.sm} {
-    justify-self: center;
-  }
   :hover {
     cursor: pointer;
   }
@@ -63,195 +65,56 @@ const UniIcon = styled.div`
     transform: rotate(-5deg);
   }
 `
-const HeaderLinks = styled(Row)<{ isShown: boolean }>`
-  justify-self: flex-end;
-  background-color: ${({ theme }) => theme.colors.bg0};
-  width: fit-content;
-  padding: 4px;
-  border-radius: 0px;
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 10px;
-  overflow: auto;
-  align-items: center;
-	${({ theme }) => theme.mediaQueries.sm} {
-    padding:  1rem;
-    grid-template-columns: 36px 1fr;
+const HeaderLinks = styled.div<{ isShown: boolean }>`
+	justify-self: center;
+	background-color: ${({ theme }) => theme.colors.bg0};
+	width: fit-content;
+	padding: 4px;
+	border-radius: 0px;
+	display: none;
+	grid-auto-flow: column;
+	gap: 10px;
+	overflow: auto;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: start;
+  justify-content: flex-end;
+	box-sizing: border-box;
+	margin: 0px;
+	min-width: 0px;
+	${({ theme }) => theme.mediaQueries.md} {
+    display: grid;
   }
-  ${({ theme }) => theme.mediaQueries.md} {
-    justify-self: flex-end;
-		flex-direction: row;
-    justify-self: flex-end;
-    z-index: 99;
-    position: fixed;
-    right: 0;
-    transform: translate(50%,-50%);
-    margin: 0 auto;
-    background-color: ${({ theme }) => theme.colors.bg0};
-    border: 1px solid ${({ theme }) => theme.colors.bg2};
-    box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
-    display: flex;
-    position: fixed;
-    top: 0;    
-    width: 276px;
-    height: 100%;
-    flex-direction: column;
-    padding: 66px 20px;
-    transition: transform .25s ease;
-    will-change: transform;
-    transform: translateX(1000%);
-    overflow-y: scroll;
-    z-index: 6;
-  }
-  ${({ theme }) => theme.mediaQueries.lg} {
-    justify-self: center;
-  }
-  ${({ theme }) => theme.mediaQueries.xl} {
-    justify-self: center;
-  }
-  ${(props) =>
+
+	${(props) =>
     props.isShown
-      ? css`					
-					${({ theme }) => theme.mediaQueries.sm} {
-						flex-direction: row;
-            justify-self: flex-end;
-            z-index: 99;
-            position: fixed;
-            right: 0;
-            transform: translate(50%, -50%);
-            margin: 0 auto;
-            background-color: ${({ theme }) => theme.colors.bg0};
-            border: 1px solid ${({ theme }) => theme.colors.bg2};
-            box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
-            display: flex;
-            position: fixed;
-            top: 0;
-            width: 276px;
-            height: 100%;
-            flex-direction: column;
-            padding: 66px 20px;
-            transition: transform 0.25s ease;
-            will-change: transform;
-            transform: translateX(1000%);
-            overflow-y: scroll;
-            z-index: 6;
-            transform: translateX(0);
-            box-shadow: -0.125rem 0 1.25rem 0 #343851;
-					}
-          ${({ theme }) => theme.mediaQueries.md} {
-						flex-direction: row;
-            justify-self: flex-end;
-            z-index: 99;
-            position: fixed;
-            right: 0;
-            transform: translate(50%, -50%);
-            margin: 0 auto;
-            background-color: ${({ theme }) => theme.colors.bg0};
-            border: 1px solid ${({ theme }) => theme.colors.bg2};
-            box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
-            display: flex;
-            position: fixed;
-            top: 0;
-            width: 276px;
-            height: 100%;
-            flex-direction: column;
-            padding: 66px 20px;
-            transition: transform 0.25s ease;
-            will-change: transform;
-            transform: translateX(1000%);
-            overflow-y: scroll;
-            z-index: 6;
-            transform: translateX(0);
-            box-shadow: -0.125rem 0 1.25rem 0 #343851;
-					}
-        `
-      : css``};
-`
-const HeaderLinksw3 = styled.div<{ isShown: boolean }>`
-  justify-self: center;
-  background-color: ${({ theme }) => theme.colors.bg0};
-  width: fit-content;
-  padding: 4px;
-  border-radius: 0px;
-  display: grid;
-  grid-auto-flow: column;
-  gap: 10px;
-  overflow: auto;
-  -webkit-box-align: center;
-  align-items: center;
-  display: flex;
-  padding: 0px;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  justify-content: flex-start;
-  box-sizing: border-box;
-  margin: 0px;
-  min-width: 0px;
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding:  1rem;
-    grid-template-columns: 36px 1fr;
-  }
-  ${({ theme }) => theme.mediaQueries.lg} {
-    justify-self: center;
-  }
-  ${({ theme }) => theme.mediaQueries.xl} {
-    justify-self: center;
-  }
-  ${(props) =>
-    props.isShown
-      ? css`					
-					${({ theme }) => theme.mediaQueries.xs} {
-						flex-direction: row;
-            justify-self: flex-end;
-            z-index: 99;
-            position: fixed;
-            right: 0;
-            transform: translate(50%, -50%);
-            margin: 0 auto;
-            background-color: ${({ theme }) => theme.colors.bg0};
-            border: 1px solid ${({ theme }) => theme.colors.bg2};
-            box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
-            display: flex;
-            position: fixed;
-            top: 0;
-            width: 276px;
-            height: 100%;
-            flex-direction: column;
-            padding: 66px 20px;
-            transition: transform 0.25s ease;
-            will-change: transform;
-            transform: translateX(1000%);
-            overflow-y: scroll;
-            z-index: 6;
-            transform: translateX(0);
-            box-shadow: -0.125rem 0 1.25rem 0 #343851;
-					}
-          ${({ theme }) => theme.mediaQueries.md} {
-						flex-direction: row;
-            justify-self: flex-end;
-            z-index: 99;
-            position: fixed;
-            right: 0;
-            transform: translate(50%, -50%);
-            margin: 0 auto;
-            background-color: ${({ theme }) => theme.colors.bg0};
-            border: 1px solid ${({ theme }) => theme.colors.bg2};
-            box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
-            display: flex;
-            position: fixed;
-            top: 0;
-            width: 276px;
-            height: 100%;
-            flex-direction: column;
-            padding: 66px 20px;
-            transition: transform 0.25s ease;
-            will-change: transform;
-            transform: translateX(1000%);
-            overflow-y: scroll;
-            z-index: 6;
-            transform: translateX(0);
-            box-shadow: -0.125rem 0 1.25rem 0 #343851;
+      ? css`
+				flex-direction: row;
+				justify-self: flex-end;
+				z-index: 99;
+				position: fixed;
+				right: 0;
+				transform: translate(50%, -50%);
+				margin: 0 auto;
+				background-color: ${({ theme }) => theme.colors.bg0};
+				border: 1px solid ${({ theme }) => theme.colors.bg2};
+				box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
+				display: flex;
+				position: fixed;
+				top: 0;
+				width: 276px;
+				height: 100%;
+				flex-direction: column;
+				padding: 66px 20px;
+				transition: transform 0.25s ease;
+				will-change: transform;
+				transform: translateX(1000%);
+				overflow-y: scroll;
+				z-index: 6;
+				transform: translateX(0);
+				box-shadow: -0.125rem 0 1.25rem 0 #343851;
+					${({ theme }) => theme.mediaQueries.md} {
+						display: none;
 					}
         `
       : css``};
@@ -260,46 +123,21 @@ const SideBarWrapper = styled.div`
   vertical-align: middle;
   padding-top: 1rem;
   display: block;
-  ${({ theme }) => theme.mediaQueries.xl} {
-    display: none;
-  }
-	${({ theme }) => theme.mediaQueries.lg} {
-    display: none;
-  }
 	${({ theme }) => theme.mediaQueries.md} {
     display: none;
   }
 `
 const NavToggle = styled.button`
-  display: block;
-	${({ theme }) => theme.mediaQueries.xl} {
+	justify-self: self-end;
+	padding-rigth: 1rem;
+	background: transparent;
+	border: 0;
+	border-radius: 3px;
+	outline: 0;
+	cursor: pointer;
+	display: block;
+	${({ theme }) => theme.mediaQueries.md} {
     display: none;
-  }
-  ${({ theme }) => theme.mediaQueries.lg} {
-    display: none;
-  }
-  ${({ theme }) => theme.mediaQueries.md} {
-    display: none;
-  }
-	${({ theme }) => theme.mediaQueries.sm} {
-    justify-self: self-end;
-    padding-rigth: 1rem;
-    background: transparent;
-    border: 0;
-    border-radius: 3px;
-    outline: 0;
-    cursor: pointer;
-    display: block;
-  }
-  ${({ theme }) => theme.mediaQueries.xs} {
-    justify-self: self-end;
-    padding-rigth: 1rem;
-    background: transparent;
-    border: 0;
-    border-radius: 3px;
-    outline: 0;
-    cursor: pointer;
-    display: block;
   }
 `
 const NavClose = styled(NavToggle)`
@@ -350,7 +188,7 @@ export default function Header() {
           <img width="24px" src={theme.isDark ? LogoDark : Logo} alt="logo" />
         </UniIcon>
       </Title>
-			<HeaderLinksw3 isShown={isShown}>
+			<HeaderLinks isShown={isShown}>
 				<SideBarWrapper>
           <NavClose onClick={() => setIsShown(!isShown)}>
             <X strokeWidth="3" color="#000" />
@@ -376,7 +214,10 @@ export default function Header() {
           <StyledNavLink id="stake-nav-link" to="/vote" onClick={() => setIsShown(!isShown)}>
             {t('Deposit')}
           </StyledNavLink>
-			</HeaderLinksw3>
+          <HeaderControls>
+            <UserMenu />
+          </HeaderControls>
+			</HeaderLinks>
       <NavToggle onClick={() => setIsShown(!isShown)}>
         <SideBarMenu size="30" strokeWidth="3" />
       </NavToggle>

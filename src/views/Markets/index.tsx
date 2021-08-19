@@ -241,16 +241,9 @@ export default function Markets() {
                     <CardChartDetails>APY</CardChartDetails>
                   </CardSubContent>
                 </CardDetails>
-                {!account ? (
-                  <Button>
-                    Connect Wallet
-                  </Button>
-                ) : (                  
-                  <Button
-                  >
-                    Details
-                  </Button>
-                )}
+                <Link href="/theter-reserve">
+                  <Button>Details</Button>
+                </Link>
               </CardContent>
             </Card>
           </CardsItems>
@@ -303,15 +296,7 @@ export default function Markets() {
                     <CardChartDetails>APY</CardChartDetails>
                   </CardSubContent>
                 </CardDetails>
-                {!account ? (
-                  <Button>
-                    Connect Wallet
-                  </Button>
-                ) : (
-                  <Button>
-                    Details
-                  </Button>
-                )}
+                <Button>Details</Button>
               </CardContent>
             </Card>
           </CardsItems>
@@ -364,15 +349,7 @@ export default function Markets() {
                     <CardChartDetails>APY</CardChartDetails>
                   </CardSubContent>
                 </CardDetails>
-                {!account ? (
-                  <Button>
-                    Connect Wallet
-                  </Button>
-                ) : (
-                  <Button>
-                    Details
-                  </Button>
-                )}
+                <Button>Details</Button>
               </CardContent>
             </Card>
           </CardsItems>
@@ -425,15 +402,7 @@ export default function Markets() {
                     <CardChartDetails>APY</CardChartDetails>
                   </CardSubContent>
                 </CardDetails>
-                {!account ? (
-                  <Button>
-                    Connect Wallet
-                  </Button>
-                ) : (
-                  <Button>
-                    Details
-                  </Button>
-                )}
+                <Button>Details</Button>
               </CardContent>
             </Card>
           </CardsItems>

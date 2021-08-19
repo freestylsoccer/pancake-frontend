@@ -50,6 +50,7 @@ const Liquidity = lazy(() => import('./views/Pool'))
 const PoolFinder = lazy(() => import('./views/PoolFinder'))
 const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
 const Markets = lazy(() => import('./views/Markets'))
+const Theter = lazy(() => import('./views/Reserves/Theter'))
 // This config is required for number formatting
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
@@ -95,6 +96,9 @@ const App: React.FC = () => {
           <Switch>
             <Route path="/" exact>
               <Home />
+            </Route>
+            <Route path="/theter-reserve" exact>
+              <Theter />
             </Route>
             <Route path="/markets" exact>
               <Markets />
@@ -144,6 +148,7 @@ const App: React.FC = () => {
 
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
             <Route exact strict path="/swap" component={Swap} />
+            {/* <Route exact strict path="/theter-reserve" component={Theter} /> */}
             <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
             <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
             <Route exact strict path="/find" component={PoolFinder} />
