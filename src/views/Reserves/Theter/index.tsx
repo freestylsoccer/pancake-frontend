@@ -1,11 +1,14 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
-import { RouteComponentProps } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import SimpleReactLightbox, { SRLWrapper, useLightbox } from 'simple-react-lightbox'
-import { Button } from '@pancakeswap/uikit'
+import { Button, Text } from '@pancakeswap/uikit'
+import useTokenBalance, { FetchStatus } from 'hooks/useTokenBalance'
+import { getUSDT2Addres } from 'utils/addressHelpers'
+import { getFullDisplayBalance, getBalanceNumber } from 'utils/formatBalance'
 import MyComponent from './components/MyComponent'
 import Invest from './components/Invest'
+import InvestOverview from './components/InvestOverview'
 
 const Container = styled.div.attrs((props) => ({
   className: 'container',
@@ -18,7 +21,7 @@ const InfoTextPrimary = styled.span`
 const InfoTextSecondary = styled.p`
   color: ${({ theme }) => theme.colors.text2};
 `
-const PackageTitle = styled.p`
+const PackageTitle = styled.div`
   padding: 1rem;
   color: ${({ theme }) => theme.colors.text1};
 `
@@ -71,7 +74,8 @@ const Theter: React.FC = () => {
   const { account } = useWeb3React()
   const [showDeposit, setShowDepostit] = useState<boolean>(false)
   const [showInvestOverview, setShowInvestOverview] = useState<boolean>(false)
-
+  const {balance, fetchStatus} = useTokenBalance(getUSDT2Addres())
+  
   return(
     <>
       {!showDeposit ? (
@@ -496,8 +500,16 @@ const Theter: React.FC = () => {
             </div>
           </section>
         </>
-      ) : (
+      ) : showDeposit && !showInvestOverview ? (
         <Invest 
+          setShowDepostit={setShowDepostit}
+          setShowInvestOverview={setShowInvestOverview}
+          showDeposit={showDeposit}
+          showInvestOverview={showInvestOverview}
+          balance={getBalanceNumber(balance, 6)}
+        />
+      ) : (
+        <InvestOverview
           setShowDepostit={setShowDepostit}
           setShowInvestOverview={setShowInvestOverview}
           showDeposit={showDeposit}

@@ -33,6 +33,7 @@ export const BUSD: { [chainId: number]: Token } = {
   ),
 }
 
+export const USDT2 = new Token(ChainId.TESTNET, '0x080De04372D5f1E317d492645b923f6286C7eC86', 6, 'USDT', 'USDT')
 export const WBNB = new Token(ChainId.MAINNET, '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', 18, 'WBNB', 'Wrapped BNB')
 export const DAI = new Token(ChainId.MAINNET, '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3', 18, 'DAI', 'Dai Stablecoin')
 export const USDT = new Token(ChainId.MAINNET, '0x55d398326f99059fF775485246999027B3197955', 18, 'USDT', 'Tether USD')
@@ -1872,6 +1873,15 @@ const tokens = {
     },
     decimals: 18,
     projectLink: 'https://moonpot.com/',
+  },
+  usdt2: {
+    symbol: 'USDT',
+    address: {
+      56: '',
+      97: '0x080De04372D5f1E317d492645b923f6286C7eC86',
+    },
+    decimals: 6,
+    projectLink: 'http://localhost:3000/',
   },
 }
 

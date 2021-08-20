@@ -957,6 +957,8 @@ font-weight: 300;
 }
 .value {
   margin-bottom: 0px;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 .content-value-subline {
   margin-top: 2px;
@@ -989,13 +991,14 @@ font-weight: 300;
 }
 
 .amount-field .token-icon {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
 }
 
 .token-icon img {
-  margin-right: 10px;
+  margin-right: 10px !important;
+  vertical-align: sub !important;
 }
 
 .basic-field {
@@ -1130,13 +1133,13 @@ font-weight: 300;
 }
 
 .actions-wrapper-button p {
-  padding: 0px;
-  margin-bottom: 0px;
+  padding: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .actions-wrapper-button span {
-  font-weight: 600;
-  margin-right: 5px;
+  font-weight: 600 !important;
+  margin-right: 5px !important;
 }
 
 .txtop-info-right-inner {
@@ -1154,10 +1157,10 @@ font-weight: 300;
 }
 
 .txtop-info-title span {
-  font-size: 12px;
-  word-break: break-word;
-  margin: 0px;
-  box-sizing: border-box;
+  font-size: 12px !important;
+  word-break: break-word !important;
+  margin: 0px !important;
+  box-sizing: border-box !important;
 }
 
 .confirmation-view {
@@ -1171,4 +1174,8 @@ font-weight: 300;
   flex: 1 1 0%;
   width: 410px;
   margin: 0px auto;
+}
+
+.amount-input:focus {
+    outline-width: 0;
 }

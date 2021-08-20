@@ -68,3 +68,6 @@ export const getBunnySpecialLotteryAddress = () => {
 export const getFarmAuctionAddress = () => {
   return getAddress(addresses.farmAuction)
 }
+export const getUSDT2Addres = () => {
+  return getAddress(tokens.usdt2.address)
+}
