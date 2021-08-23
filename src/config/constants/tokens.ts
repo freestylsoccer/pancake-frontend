@@ -924,7 +924,7 @@ const tokens = {
     symbol: 'DAI',
     address: {
       56: '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3',
-      97: '',
+      97: '0x6EA710242BbE96F3EE2f4213B22c39A03Ea93C28',
     },
     decimals: 18,
     projectLink: 'https://www.makerdao.com/',

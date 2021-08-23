@@ -51,6 +51,10 @@ const PoolFinder = lazy(() => import('./views/PoolFinder'))
 const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
 const Markets = lazy(() => import('./views/Markets'))
 const Theter = lazy(() => import('./views/Reserves/Theter'))
+const Invest = lazy(() => import('./views/Reserves/Theter/components/Invest'))
+const InvestOverview = lazy(() => import('./views/Reserves/Theter/components/InvestOverview'))
+
+
 // This config is required for number formatting
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
@@ -162,6 +166,7 @@ const App: React.FC = () => {
             <Route exact path="/create/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
             <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
             <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+            <Route exact path="/theter-reserve/add/:currencyIdA" component={Invest} />
 
             {/* Redirect */}
             <Route path="/pool">

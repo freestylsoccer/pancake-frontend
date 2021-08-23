@@ -66,27 +66,100 @@ const UniIcon = styled.div`
   }
 `
 const HeaderLinks = styled.div<{ isShown: boolean }>`
+	justify-self: center;
+	background-color: ${({ theme }) => theme.colors.bg0};
+	width: fit-content;
+	padding: 4px;
+	border-radius: 0px;
+	display: none;
+	grid-auto-flow: column;
+	gap: 10px;
+	overflow: auto;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: start;
+  justify-content: flex-end;
+	box-sizing: border-box;
+	margin: 0px;
+	min-width: 0px;
+	${({ theme }) => theme.mediaQueries.md} {
+    display: grid;
+  }
+
+	${(props) =>
+    props.isShown
+      ? css`
+				flex-direction: row;
+				justify-self: flex-end;
+				z-index: 99;
+				position: fixed;
+				right: 0;
+				transform: translate(50%, -50%);
+				margin: 0 auto;
+				background-color: ${({ theme }) => theme.colors.bg0};
+				border: 1px solid ${({ theme }) => theme.colors.bg2};
+				box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
+				display: flex;
+				position: fixed;
+				top: 0;
+				width: 276px;
+				height: 100%;
+				flex-direction: column;
+				padding: 66px 20px;
+				transition: transform 0.25s ease;
+				will-change: transform;
+				transform: translateX(1000%);
+				overflow-y: scroll;
+				z-index: 6;
+				transform: translateX(0);
+				box-shadow: -0.125rem 0 1.25rem 0 #343851;
+					${({ theme }) => theme.mediaQueries.md} {
+						display: none;
+					}
+        `
+      : css``};
+`
+const HeaderLinks2 = styled.div<{ isShown: boolean }>`
 	${(props) =>    
     props.isShown
       ? css`
-        display: flex;
-        padding: 0;
-        align-items: center;
-        justify-content: flex-end;
-        padding: 0rem;
-        border: 0px;
-        border-radius: 0px;
+        justify-self: center;
         background-color: ${({ theme }) => theme.colors.bg0};
         width: fit-content;
-        position: fixed;
-        right: 2rem;
-
+        padding: 4px;
+        border-radius: 0px;
+        display: grid;
+        grid-auto-flow: column;
+        gap: 10px;
+        overflow: auto;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: start;
+        justify-content: flex-end;
+        box-sizing: border-box;
+        margin: 0px;
+        min-width: 0px;
+        @media (max-width: 1280px){          
+          justify-self: center;
+          background-color: ${({ theme }) => theme.colors.bg0};
+          width: fit-content;
+          padding: 4px;
+          border-radius: 0px;
+          display: grid;
+          grid-auto-flow: column;
+          gap: 10px;
+          overflow: auto;
+          -webkit-box-align: center;
+          align-items: center;
+          -webkit-box-pack: start;
+          justify-content: flex-end;
+          box-sizing: border-box;
+          margin: 0px;
+          min-width: 0px;
+        }
         @media (max-width: 960px) {
           flex-direction: row;
           justify-self: flex-end;
-          align-items: center;
-          justify-content: end;
-          padding: 2rem;
           z-index: 99;
           position: fixed;
           right: 0;
@@ -101,6 +174,7 @@ const HeaderLinks = styled.div<{ isShown: boolean }>`
           width: 276px;
           height: 100%;
           flex-direction: column;
+          padding: 66px 20px;
           transition: transform 0.25s ease;
           will-change: transform;
           transform: translateX(1000%);
@@ -111,18 +185,40 @@ const HeaderLinks = styled.div<{ isShown: boolean }>`
         }
         `
       : css`
-        display: flex;
-        padding: 0;
-        align-items: center;
-        justify-content: flex-end;
-        padding: 0rem;
-        border: 0px;
-        border-radius: 0px;
+        justify-self: center;
         background-color: ${({ theme }) => theme.colors.bg0};
         width: fit-content;
-        position: fixed;
-        right: 2rem;
-
+        padding: 4px;
+        border-radius: 0px;
+        display: grid;
+        grid-auto-flow: column;
+        gap: 10px;
+        overflow: auto;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: start;
+        justify-content: flex-end;
+        box-sizing: border-box;
+        margin: 0px;
+        min-width: 0px;
+        @media (max-width: 1280px){          
+          justify-self: center;
+          background-color: ${({ theme }) => theme.colors.bg0};
+          width: fit-content;
+          padding: 4px;
+          border-radius: 0px;
+          display: grid;
+          grid-auto-flow: column;
+          gap: 10px;
+          overflow: auto;
+          -webkit-box-align: center;
+          align-items: center;
+          -webkit-box-pack: start;
+          justify-content: flex-end;
+          box-sizing: border-box;
+          margin: 0px;
+          min-width: 0px;
+        }
         @media (max-width: 960px) {
           display: none;
         }
@@ -190,7 +286,6 @@ export default function Header() {
   const { t } = useTranslation()
 	const scrollY = useScrollPosition()
 	const [isShown, setIsShown] = useState(false)
-  console.log(isShown)
   return (
     <HeaderFrame showBackground={scrollY > 45}>
 			<Title href=".">

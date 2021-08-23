@@ -911,6 +911,9 @@ font-weight: 300;
   width: 100%;
   overflow: hidden;
 }
+.caption  h6{
+  color:rgb(182, 80, 158) !important;
+}
 .row-amount-field {
   font-size: 14px;
   display: flex;
@@ -1005,6 +1008,7 @@ font-weight: 300;
   position: relative;
   z-index: 2;
   width: 100%;
+  padding-left: 0.75rem;
 }
 
 .amount-field-input input {
@@ -1129,6 +1133,16 @@ font-weight: 300;
 }
 .actions-wrapper-button-active {
   background: linear-gradient(90deg, rgb(46, 186, 198) 0%, rgb(182, 80, 158) 100%);
+  color: rgb(255, 255, 255)
+}
+
+.actions-wrapper-button-finished {
+  background: #31ddb7;
+  color: rgb(255, 255, 255)
+}
+
+.actions-wrapper-button-loading {
+  background: #ddd231;
   color: rgb(255, 255, 255)
 }
 
