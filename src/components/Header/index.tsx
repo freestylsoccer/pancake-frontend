@@ -190,7 +190,7 @@ export default function Header() {
   const { t } = useTranslation()
 	const scrollY = useScrollPosition()
 	const [isShown, setIsShown] = useState(false)
-  console.log(isShown)
+
   return (
     <HeaderFrame showBackground={scrollY > 45}>
 			<Title href=".">

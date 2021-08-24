@@ -1883,6 +1883,15 @@ const tokens = {
     decimals: 6,
     projectLink: 'http://localhost:3000/',
   },
+  ausdt: {
+    symbol: 'aUSDT',
+    address: {
+      56: '',
+      97: '0xA95B3C688B55534bEcDBf62aebA21A0FC6F23262',
+    },
+    decimals: 6,
+    projectLink: 'http://localhost:3000/',
+  },
 }
 
 export default tokens

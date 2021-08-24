@@ -5,7 +5,8 @@ import SimpleReactLightbox, { SRLWrapper, useLightbox } from 'simple-react-light
 import { Button, Text } from '@pancakeswap/uikit'
 import { Link } from 'react-router-dom'
 import useTokenBalance, { FetchStatus } from 'hooks/useTokenBalance'
-import { getUSDT2Addres } from 'utils/addressHelpers'
+import useReserveLiquidity from 'hooks/useReserveLiquidity'
+import { getUSDT2Addres, getAusdtAddress } from 'utils/addressHelpers'
 import { getFullDisplayBalance, getBalanceNumber } from 'utils/formatBalance'
 import MyComponent from './components/MyComponent'
 import Invest from './components/Invest'
@@ -76,7 +77,9 @@ const Theter: React.FC = () => {
   const [showDeposit, setShowDepostit] = useState<boolean>(false)
   const [showInvestOverview, setShowInvestOverview] = useState<boolean>(false)
   const [amount, setAmount] = useState<any>("")
-  const {balance, fetchStatus} = useTokenBalance(getUSDT2Addres())
+  const { balance, fetchStatus } = useTokenBalance(getUSDT2Addres())
+  const { balance:liquidity, fetchStatus:liquidityFst } = useReserveLiquidity(getUSDT2Addres(), getAusdtAddress())
+  console.log(getBalanceNumber(liquidity, 6))
   
   return(
     <>
